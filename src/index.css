@@ -69,16 +69,167 @@
     border-color 180ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Print Broadsheet Stylesheet */
+/* ============================================================================
+   Comprehensive Print Broadsheet Stylesheet
+   ============================================================================ */
+@page {
+  size: letter portrait;
+  margin: 0.45in 0.5in 0.5in;
+}
+
+@page :first {
+  margin-top: 0.35in;
+}
+
 @media print {
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+    transition: none !important;
+    animation: none !important;
+    box-shadow: none !important;
+  }
+
+  html {
+    font-size: 13px;
+    background-color: #F7F5F0 !important;
+    color: #141413 !important;
+  }
+
   body {
-    background: #ffffff !important;
-    color: #000000 !important;
+    background-color: #F7F5F0 !important;
+    color: #141413 !important;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    line-height: 1.5;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    margin: 0 !important;
+    padding: 0 !important;
   }
-  .no-print {
-    display: none !important;
+
+  /* Ensure Evening Edition (.dark) prints cleanly as warm newsprint & soy ink */
+  .dark,
+  .dark body,
+  .dark .min-h-screen,
+  .dark [class*="dark:bg-[#141413]"] {
+    background-color: #F7F5F0 !important;
+    color: #141413 !important;
   }
+
+  .dark [class*="dark:bg-[#1E1D1B]"] {
+    background-color: #EFECE6 !important;
+    color: #141413 !important;
+  }
+
+  .dark [class*="dark:bg-[#F7F5F0]"] {
+    background-color: #141413 !important;
+    color: #F7F5F0 !important;
+  }
+
+  .dark [class*="dark:text-[#F7F5F0]"] {
+    color: #141413 !important;
+  }
+
+  .dark [class*="dark:text-[#B5B2AA]"] {
+    color: #4A4945 !important;
+  }
+
+  .dark [class*="dark:text-[#E06666]"] {
+    color: #8B1E1E !important;
+  }
+
+  .dark [class*="dark:border-[#F7F5F0]"] {
+    border-color: #141413 !important;
+  }
+
+  .dark [class*="dark:stroke-[#F7F5F0]"] {
+    stroke: #141413 !important;
+  }
+
+  .dark [class*="dark:fill-[#141413]"] {
+    fill: #F7F5F0 !important;
+  }
+
+  .dark [class*="dark:fill-[#F7F5F0]"] {
+    fill: #141413 !important;
+  }
+
+  /* Print Typography Weights & Widow/Orphan Control */
+  h1 {
+    font-weight: 900 !important;
+    letter-spacing: -0.025em;
+    color: #141413 !important;
+  }
+
+  h2,
+  h3,
+  h4 {
+    font-weight: 700 !important;
+    color: #141413 !important;
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+
+  p,
+  li,
+  blockquote,
+  td,
+  th {
+    orphans: 3;
+    widows: 3;
+  }
+
+  .font-mono {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .broadsheet-dropcap::first-letter {
+    font-weight: 900 !important;
+    font-size: 3.35rem;
+    line-height: 0.78;
+    color: #141413 !important;
+  }
+
+  /* Preserve Multi-Column Broadsheet Structure & Prevent Mid-Block Splits */
+  article,
+  figure,
+  blockquote,
+  pre,
+  table,
+  tr,
+  aside section,
+  footer > div > div {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  img,
+  svg {
+    max-width: 100% !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
   .editorial-plate-img {
     filter: grayscale(100%) contrast(120%) !important;
+  }
+
+  a {
+    text-decoration: none !important;
+  }
+
+  /* Hide Interactive Screen-Only Controls in Hard Copies */
+  .no-print,
+  [role="dialog"],
+  button[aria-pressed],
+  nav[aria-label="Broadsheet Sections"],
+  nav[aria-label="Secondary Dispatches Pagination"],
+  footer form {
+    display: none !important;
   }
 }
